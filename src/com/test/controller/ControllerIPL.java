@@ -9,13 +9,14 @@ public class ControllerIPL {
     private ServiceIPL service;
     private Scanner scanner;
 
-    public ControllerIPL() {
+    /*public ControllerIPL() {
         service = new ServiceIPL();
         scanner = new Scanner(System.in);
-    }
+    }*/
 
     // Start the IPL app
     public void startIPL() {
+        scanner = new Scanner(System.in);
         while (true) {
             System.out.println("===== IPL Management System =====");
             System.out.println("1. View All Players");
@@ -47,6 +48,7 @@ public class ControllerIPL {
 
     // Method to view all players
     private void viewAllPlayers() {
+        service = new ServiceIPL();
         List<PlayersIPL> players = service.fetchAllPlayers();
         for (PlayersIPL player : players) {
             System.out.println(player);
@@ -55,6 +57,7 @@ public class ControllerIPL {
 
     // Method to add a new player
     private void addNewPlayer() {
+        scanner = new Scanner(System.in);
         System.out.println("Enter Jersey No: ");
         int jerseyNo = scanner.nextInt();
         System.out.println("Enter Name: ");
@@ -73,6 +76,7 @@ public class ControllerIPL {
 
     // Method to find player by jersey number
     private void findPlayerByJerseyNo() {
+        scanner = new Scanner(System.in);
         System.out.println("Enter Jersey No: ");
         int jerseyNo = scanner.nextInt();
         PlayersIPL player = service.findPlayerByJerseyNo(jerseyNo);
