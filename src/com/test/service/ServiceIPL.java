@@ -7,9 +7,9 @@ import java.util.List;
 public class ServiceIPL {
     private DaoIPL daoIPL = null;
 
-    public ServiceIPL() {
+    /*public ServiceIPL() {
         //daoIPL = new DaoIPL();
-    }
+    }*/
 
     // Method to return all players
     public List<PlayersIPL> fetchAllPlayers() {
