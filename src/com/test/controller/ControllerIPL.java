@@ -17,7 +17,7 @@ public class ControllerIPL {
     }*/
 
     //Start the IPL app.
-    public void startIPL(String team) {
+    public void startIPL() {
         scanner = new Scanner(System.in);
         while (true) {
             System.out.println ("=== === === === === === === === === === === === === " );
@@ -53,7 +53,7 @@ public class ControllerIPL {
                     displayAllPlayersByTeam();
                     break;
                 case 5:
-                    displayPlayersByTeam(team);
+                    //displayPlayersByTeam(team);
                     break;
                 case 6:
                     findPlayerByJerseyNo();
