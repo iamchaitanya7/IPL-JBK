@@ -2,10 +2,12 @@ package com.test.dao;
 
 import com.test.entity.PlayersIPL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DaoIPL {
     private List<PlayersIPL> playersList;
+    private HashMap<String, List<PlayersIPL>> teamPlayersMap;
 
     public DaoIPL() {
         playersList = new ArrayList<>();
@@ -37,17 +39,65 @@ public class DaoIPL {
         playersList.add(new PlayersIPL(2, "Faf du Plessis", 5000, 7, 88.5));
     }
 
-    // Method to get the list of all players
+    //Method to get the list of all players.
     public List<PlayersIPL> getAllPlayers() {
         return playersList;
     }
 
-    // Method to add a player to the list
+    //Method to add a player to the list.
     public void addPlayer(PlayersIPL player) {
         playersList.add(player);
     }
 
-    // Method to get player by jersey number
+    //Method to add players to specific teams.
+    public void playersByTeams(){
+        //Creating playersList for CSK, MI, and RCB teams and group them by team.
+        List<PlayersIPL> cskPlayers = new ArrayList<>();
+        cskPlayers.add(new PlayersIPL(7, "MS Dhoni", 4500, 25, 87.3));
+        cskPlayers.add(new PlayersIPL(18, "Virat Kohli", 6200, 8, 91.5));
+        cskPlayers.add(new PlayersIPL(45, "Rohit Sharma", 5100, 6, 88.9));
+        cskPlayers.add(new PlayersIPL(33, "Steve Smith", 4800, 4, 82.5));
+        cskPlayers.add(new PlayersIPL(17, "AB de Villiers", 5600, 15, 95.0));
+
+        List<PlayersIPL> miPlayers = new ArrayList<>();
+        miPlayers.add(new PlayersIPL(99, "Lasith Malinga", 1200, 170, 75.2));
+        miPlayers.add(new PlayersIPL(24, "Ben Stokes", 3200, 90, 88.1));
+        miPlayers.add(new PlayersIPL(12, "Kane Williamson", 4100, 5, 81.6));
+        miPlayers.add(new PlayersIPL(25, "Chris Gayle", 6900, 20, 90.3));
+        miPlayers.add(new PlayersIPL(35, "Jasprit Bumrah", 1100, 120, 76.4));
+
+        List<PlayersIPL> rcbPlayers = new ArrayList<>();
+        rcbPlayers.add(new PlayersIPL(63, "Ravindra Jadeja", 2900, 120, 87.8));
+        rcbPlayers.add(new PlayersIPL(48, "Andre Russell", 2400, 90, 93.5));
+        rcbPlayers.add(new PlayersIPL(22, "Hardik Pandya", 2600, 85, 91.7));
+        rcbPlayers.add(new PlayersIPL(4, "David Warner", 5800, 7, 92.1));
+        rcbPlayers.add(new PlayersIPL(9, "Bhuvneshwar Kumar", 800, 105, 72.0));
+
+        //Adding players to the HashMap for respective teams.
+        teamPlayersMap = new HashMap<>();
+        teamPlayersMap.put("CSK", cskPlayers);
+        teamPlayersMap.put("MI", miPlayers);
+        teamPlayersMap.put("RCB", rcbPlayers);
+
+    }
+
+    //Method to get all players by all teams.
+    public HashMap<String, List<PlayersIPL>> getAllPlayersByTeam() {
+        return teamPlayersMap;
+    }
+
+    //Method to get players by a specific team.
+    public List<PlayersIPL> getPlayersByTeam(String team) {
+        return teamPlayersMap.getOrDefault(team, new ArrayList<>());      //trying to return ArrayList of incoming Values
+        //return teamPlayersMap.get(team);
+    }
+
+    //Method to add a player to a specific team.
+    public void addPlayerToTeam(String team, PlayersIPL player) {
+        teamPlayersMap.computeIfAbsent(team, k -> new ArrayList<>()).add(player);
+    }
+
+    //Method to get player by specific jersey number.
     public PlayersIPL getPlayerByJerseyNo(int jerseyNo) {
         for (PlayersIPL player : playersList) {
             if (player.getJerseyNo() == jerseyNo) {
