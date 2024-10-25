@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ControllerIPL {
-    private ServiceIPL service;
+    //private ServiceIPL service;
     private Scanner scanner;
 
     /*public ControllerIPL() {
@@ -53,25 +53,25 @@ public class ControllerIPL {
                     displayAllPlayersByTeam();
                     break;
                 case 5:
-                    //displayPlayersByTeam(team);
+                    //displayPlayersByTeam();
                     break;
                 case 6:
-                    findPlayerByJerseyNo();
+                    viewPlayerWithHighestRuns();
                     break;
                 case 7:
-                    findPlayerByJerseyNo();
+                    viewPlayerWithLowestRuns();
                     break;
                 case 8:
-                    findPlayerByJerseyNo();
+                    viewPlayerWithHighestWickets();
                     break;
                 case 9:
-                    findPlayerByJerseyNo();
+                    viewPlayerWithLowestWickets();
                     break;
                 case 10:
-                    findPlayerByJerseyNo();
+                    viewPlayerWithHighestStrikeRate();
                     break;
                 case 11:
-                    findPlayerByJerseyNo();
+                    viewPlayerWithLowestStrikeRate();
                     break;
                 case 12:
                     System.out.println("Exiting... Thank you!");
@@ -85,8 +85,8 @@ public class ControllerIPL {
 
     //Method to view all players.
     private void viewAllPlayers() {
-        service = new ServiceIPL();
-        List<PlayersIPL> players = service.fetchAllPlayers();
+        ServiceIPL service = new ServiceIPL();
+        List<PlayersIPL> players = service.getAllPlayers();
         for (PlayersIPL player : players) {
             System.out.println(player);
         }
@@ -94,6 +94,7 @@ public class ControllerIPL {
 
     //Method to add a new player.
     private void addNewPlayer() {
+        ServiceIPL service = new ServiceIPL();
         scanner = new Scanner(System.in);
         System.out.println("Enter Jersey No: ");
         int jerseyNo = scanner.nextInt();
@@ -105,6 +106,8 @@ public class ControllerIPL {
         int wickets = scanner.nextInt();
         System.out.println("Enter Strike Rate: ");
         double strikeRate = scanner.nextDouble();
+        System.out.println("Enter Team: ");
+        String team = scanner.next ();
 
         PlayersIPL newPlayer = new PlayersIPL(jerseyNo, name, runs, wickets, strikeRate);
         service.registerPlayer(newPlayer);
@@ -113,11 +116,11 @@ public class ControllerIPL {
 
     // Method to find player by jersey number
     private void findPlayerByJerseyNo() {
+        ServiceIPL service = new ServiceIPL();
         scanner = new Scanner(System.in);
         System.out.println("Enter Jersey No: ");
         int jerseyNo = scanner.nextInt();
         PlayersIPL player = service.findPlayerByJerseyNo(jerseyNo);
-
         if (player != null) {
             System.out.println(player);
         } else {
@@ -125,8 +128,9 @@ public class ControllerIPL {
         }
     }
 
-    // Method to print all players by team
+    //Method to print all players from all teams.
     public void displayAllPlayersByTeam() {
+        ServiceIPL service = new ServiceIPL();
         HashMap<String, List<PlayersIPL>> playersByTeam = service.getAllPlayersByTeam();
         for (String team : playersByTeam.keySet()) {
             System.out.println("Team: " + team);
@@ -138,6 +142,7 @@ public class ControllerIPL {
 
     // Method to display players for a specific team
     public void displayPlayersByTeam(String team) {
+        ServiceIPL service = new ServiceIPL();
         List<PlayersIPL> players = service.getPlayersByTeam(team);
         if (players.isEmpty()) {
             System.out.println("No players found for team " + team);
@@ -146,6 +151,76 @@ public class ControllerIPL {
             for (PlayersIPL player : players) {
                 System.out.println(player);
             }
+        }
+    }
+
+    public void viewPlayerWithHighestWickets() {
+        ServiceIPL service = new ServiceIPL();
+        PlayersIPL player = service.getPlayerWithHighestWickets();
+        if (player != null) {
+            System.out.println("Player with Highest Wickets: " + player);
+        } else {
+            System.out.println("No player data available.");
+        }
+    }
+
+    public void viewPlayerWithLowestWickets() {
+        ServiceIPL service = new ServiceIPL();
+        PlayersIPL player = service.getPlayerWithLowestWickets();
+        if (player != null) {
+            System.out.println("Player with Lowest Wickets: " + player);
+        } else {
+            System.out.println("No player data available.");
+        }
+    }
+
+    public void viewPlayerWithHighestRuns() {
+        ServiceIPL service = new ServiceIPL();
+        PlayersIPL player = service.getPlayerWithHighestRuns();
+        if (player != null) {
+            System.out.println("Player with Highest Runs: " + player);
+        } else {
+            System.out.println("No player data available.");
+        }
+    }
+
+    public void viewPlayerWithLowestRuns() {
+        ServiceIPL service = new ServiceIPL();
+        PlayersIPL player = service.getPlayerWithLowestRuns();
+        if (player != null) {
+            System.out.println("Player with Lowest Runs: " + player);
+        } else {
+            System.out.println("No player data available.");
+        }
+    }
+
+    public void viewPlayerWithHighestStrikeRate() {
+        ServiceIPL service = new ServiceIPL();
+        PlayersIPL player = service.getPlayerWithHighestStrikeRate();
+        if (player != null) {
+            System.out.println("Player with Highest Strike Rate: " + player);
+        } else {
+            System.out.println("No player data available.");
+        }
+    }
+
+    public void viewPlayerWithLowestStrikeRate() {
+        ServiceIPL service = new ServiceIPL();
+        PlayersIPL player = service.getPlayerWithLowestStrikeRate();
+        if (player != null) {
+            System.out.println("Player with Lowest Strike Rate: " + player);
+        } else {
+            System.out.println("No player data available.");
+        }
+    }
+
+    public void viewPlayerByName(String playerName) {
+        ServiceIPL service = new ServiceIPL();
+        List<PlayersIPL> players = service.getPlayersByName(playerName);
+        if (players.isEmpty()) {
+            System.out.println("No player found with the given name.");
+        } else {
+            players.forEach(System.out::println);
         }
     }
 }
