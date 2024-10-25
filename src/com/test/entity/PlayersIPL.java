@@ -5,6 +5,7 @@ public class PlayersIPL {
     private String name;
     private int runs;
     private int wickets;
+    private String team;
     private double strikeRate;
 
     public PlayersIPL(int jerseyNo, String name, int runs, int wickets, double strikeRate) {
@@ -12,6 +13,7 @@ public class PlayersIPL {
         this.name = name;
         this.runs = runs;
         this.wickets = wickets;
+        this.team = null;
         this.strikeRate = strikeRate;
     }
 
@@ -55,9 +57,17 @@ public class PlayersIPL {
         this.strikeRate = strikeRate;
     }
 
+    public String getTeam () {
+        return team;
+    }
+
+    public void setTeam (String team) {
+        this.team = team;
+    }
+
     @Override
     public String toString() {
         return "Player [Jersey No=" + jerseyNo + ", Name=" + name + ", Runs=" + runs + ", Wickets=" + wickets +
-                ", Strike Rate=" + strikeRate + "]";
+                ", Strike Rate=" + strikeRate + ", team='" + team + "]";
     }
 }
