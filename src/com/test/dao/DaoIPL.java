@@ -4,6 +4,7 @@ import com.test.entity.PlayersIPL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DaoIPL {
     private List<PlayersIPL> playersList;
@@ -81,16 +82,18 @@ public class DaoIPL {
 
     }
 
-    //Method to get all players by all teams.
     public HashMap<String, List<PlayersIPL>> getAllPlayersByTeam() {
-        return teamPlayersMap;
+        return playersList.stream()
+                .collect(Collectors.groupingBy(PlayersIPL::getTeam, HashMap::new, Collectors.toList()));
     }
 
-    //Method to get players by a specific team.
-    public List<PlayersIPL> getPlayersByTeam(String team) {
-        return teamPlayersMap.getOrDefault(team, new ArrayList<>());      //trying to return ArrayList of incoming Values
-        //return teamPlayersMap.get(team);
+    public List<PlayersIPL> getPlayersByTeam(String teamName) {
+        return playersList.stream()
+                .filter(player -> teamName.equalsIgnoreCase(player.getTeam()))
+                .collect(Collectors.toList());
     }
+
+
 
     //Method to add a player to a specific team.
     public void addPlayerToTeam(String team, PlayersIPL player) {
